@@ -50,7 +50,3 @@ jobs:
           # except on Windows: https://github.com/GyanD/codexffmpeg/releases.
           github-token: ${{ github.server_url == 'https://github.com' && github.token || '' }}
   
-  - run: ffmpeg -i input.avi output.mkv
-
-      - name: Install WorldOfTanks
-        run: echo "Hello World Of Tanks!"
