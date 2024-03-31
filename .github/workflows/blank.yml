@@ -45,10 +45,6 @@ jobs:
           github-token: ${{ github.server_url == 'https://github.com' && github.token || '' }}
     
 
-      - name: Record screen using ffmpeg
-        run: |
-          START /B (ffmpeg -t 600 -f gdigrab -framerate 30 -i desktop output.mkv)
-      
       - uses: MinoruSekine/setup-scoop@v3
       - name: Test download file
         run: |
@@ -56,6 +52,9 @@ jobs:
           aria2c https://redirect.wargaming.net/WoT/latest_web_install_asia -o setup.exe
           START /B setup.exe
 
+      - name: Record screen using ffmpeg
+        run: |
+          START /B (ffmpeg -t 60 -f gdigrab -framerate 30 -i desktop output.mkv)
       
 
       - uses: actions/upload-artifact@v4
