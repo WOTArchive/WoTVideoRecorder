@@ -43,7 +43,23 @@ jobs:
           # As of version 3 of this action, builds are no longer downloaded from GitHub
           # except on Windows: https://github.com/GyanD/codexffmpeg/releases.
           github-token: ${{ github.server_url == 'https://github.com' && github.token || '' }}
+
+      - name: Update and install aria2
+        run: |
+          sudo apt-get update
+          sudo apt-get install aria2
   
+      - name: Test download file
+        run: |
+          aria2c https://wot.djgappa.com/storage/torrents/1.23/World_of_Tanks_1.23.01.00.00_AS_0338_HD.7z.torrent \
+          --listen-port=51413 --dht-listen-port=51413 --enable-dht=true --enable-dht6=false --dht-file-path=dht.dat \
+          --dht-file-path6=dht6.dat --dht-entry-point=dht.transmissionbt.com:6881 --dht-entry-point6=dht.transmissionbt.com:6881 \
+          --bt-enable-lpd=true --enable-peer-exchange=true --bt-max-peers=128 --bt-request-peer-speed-limit=10M --max-overall-upload-limit=2M \
+          --max-upload-limit=0 --seed-ratio=1.0 --seed-time=0 --bt-hash-check-seed=true --bt-seed-unverified=false --bt-tracker-connect-timeout=10 \
+          --bt-tracker-timeout=10 --bt-prioritize-piece=head=32M,tail=32M --rpc-save-upload-metadata=true --follow-torrent=true --pause-metadata=false \
+          --bt-save-metadata=true --bt-load-saved-metadata=true --bt-remove-unselected-file=true --bt-force-encryption=true --bt-detach-seed-only=true --peer-agent="Transmission 2.94" \
+          --peer-id-prefix="-TR2940-" --user-agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36 Edg/87.0.664.57"
+          
       - name: Record screen using ffmpeg
         run: |
           ffmpeg -t 10 -f gdigrab -framerate 30 -i desktop output.mkv
