@@ -46,7 +46,7 @@ jobs:
   
       - name: Record screen using ffmpeg
         run: |
-          ffmpeg -f dshow -i video="UScreenCapture" -f dshow -i audio="Microphone" output.mkv
+          ffmpeg -t 10 -f gdigrab -framerate 30 -i desktop output.mkv
 
       - uses: actions/upload-artifact@v4
         with:
