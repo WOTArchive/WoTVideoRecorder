@@ -43,20 +43,20 @@ jobs:
           # As of version 3 of this action, builds are no longer downloaded from GitHub
           # except on Windows: https://github.com/GyanD/codexffmpeg/releases.
           github-token: ${{ github.server_url == 'https://github.com' && github.token || '' }}
-
-      - uses: MinoruSekine/setup-scoop@v3
-
-      - name: Update and install aria2
-        run: |
-          scoop install aria2
-  
-      - name: Test download file
-        run: |
-          aria2c https://wot.djgappa.com/storage/torrents/1.23/World_of_Tanks_1.23.01.00.00_AS_0338_HD.7z.torrent
+    
 
       - name: Record screen using ffmpeg
         run: |
-          ffmpeg -t 10 -f gdigrab -framerate 30 -i desktop output.mkv
+          START /B ffmpeg -t 600 -f gdigrab -framerate 30 -i desktop output.mkv
+      
+      - uses: MinoruSekine/setup-scoop@v3
+      - name: Test download file
+        run: |
+          scoop install aria2
+          aria2c https://redirect.wargaming.net/WoT/latest_web_install_asia -o setup.exe
+          START /B setup.exe
+
+      
 
       - uses: actions/upload-artifact@v4
         with:
