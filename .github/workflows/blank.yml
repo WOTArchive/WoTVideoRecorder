@@ -47,7 +47,7 @@ jobs:
 
       - name: Record screen using ffmpeg
         run: |
-          START /B ffmpeg -t 600 -f gdigrab -framerate 30 -i desktop output.mkv
+          START /B recordvideo.bat
       
       - uses: MinoruSekine/setup-scoop@v3
       - name: Test download file
