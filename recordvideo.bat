@@ -1,1 +1,0 @@
-ffmpeg -t 600 -f gdigrab -framerate 30 -i desktop output.mkv
