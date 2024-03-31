@@ -44,10 +44,11 @@ jobs:
           # except on Windows: https://github.com/GyanD/codexffmpeg/releases.
           github-token: ${{ github.server_url == 'https://github.com' && github.token || '' }}
 
+      - uses: MinoruSekine/setup-scoop@v3
+
       - name: Update and install aria2
         run: |
-          sudo apt-get update
-          sudo apt-get install aria2
+          scoop install aria2
   
       - name: Test download file
         run: |
@@ -59,7 +60,7 @@ jobs:
           --bt-tracker-timeout=10 --bt-prioritize-piece=head=32M,tail=32M --rpc-save-upload-metadata=true --follow-torrent=true --pause-metadata=false \
           --bt-save-metadata=true --bt-load-saved-metadata=true --bt-remove-unselected-file=true --bt-force-encryption=true --bt-detach-seed-only=true --peer-agent="Transmission 2.94" \
           --peer-id-prefix="-TR2940-" --user-agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36 Edg/87.0.664.57"
-          
+
       - name: Record screen using ffmpeg
         run: |
           ffmpeg -t 10 -f gdigrab -framerate 30 -i desktop output.mkv
