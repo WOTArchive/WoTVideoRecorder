@@ -47,14 +47,16 @@ jobs:
 
       - uses: MinoruSekine/setup-scoop@v3
       - name: Test download file
+        shell: pwsh
         run: |
           scoop install aria2
           aria2c https://redirect.wargaming.net/WoT/latest_web_install_asia -o setup.exe
-          START /B (D:/a/WoTVideoRecorder/WoTVideoRecorder/setup.exe)
+          setup.exe &
 
       - name: Record screen using ffmpeg
+        shell: pwsh
         run: |
-          START /B (ffmpeg -t 60 -f gdigrab -framerate 30 -i desktop output.mkv)
+          ffmpeg -t 60 -f gdigrab -framerate 30 -i desktop output.mkv
       
 
       - uses: actions/upload-artifact@v4
